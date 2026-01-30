@@ -1,0 +1,292 @@
+{
+	"info": {
+		"_postman_id": "a9b8c7d6-e5f4-4d3c-b2a1-098765432109",
+		"name": "Hatch Pay Mock Gateway Service",
+		"description": "Collection for testing Hatch Pay Mock Gateway Service scenarios.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Payment Operations",
+			"item": [
+				{
+					"name": "CCAUTH - Success",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"TRANSACTION\": {\n        \"RNID\": \"MOCK_ID\",\n        \"RNCERT\": \"MOCK_CERT\",\n        \"TRANSACTIONTYPE\": \"CCAUTH\",\n        \"CCAMT\": \"10.00\"\n    }\n}"
+						},
+						"url": {
+							"raw": "{{mock_gateway_url}}/CCAUTH",
+							"host": ["{{mock_gateway_url}}"],
+							"path": ["CCAUTH"]
+						}
+					}
+				},
+				{
+					"name": "CCFORCEAUTH (Capture) - Success",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"TRANSACTION\": {\n        \"RNID\": \"MOCK_ID\",\n        \"RNCERT\": \"MOCK_CERT\",\n        \"TRANSACTIONTYPE\": \"CCFORCEAUTH\",\n        \"SYSTEMTRACENUM\": \"MOCK_TRACE\"\n    }\n}"
+						},
+						"url": {
+							"raw": "{{mock_gateway_url}}/CCFORCEAUTH",
+							"host": ["{{mock_gateway_url}}"],
+							"path": ["CCFORCEAUTH"]
+						}
+					}
+				},
+				{
+					"name": "CCCREDIT (Refund) - Success",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"TRANSACTION\": {\n        \"RNID\": \"MOCK_ID\",\n        \"RNCERT\": \"MOCK_CERT\",\n        \"TRANSACTIONTYPE\": \"CCCREDIT\",\n        \"CCAMT\": \"5.00\"\n    }\n}"
+						},
+						"url": {
+							"raw": "{{mock_gateway_url}}/CCCREDIT",
+							"host": ["{{mock_gateway_url}}"],
+							"path": ["CCCREDIT"]
+						}
+					}
+				},
+				{
+					"name": "CCREVERSE (Void) - Success",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"TRANSACTION\": {\n        \"RNID\": \"MOCK_ID\",\n        \"RNCERT\": \"MOCK_CERT\",\n        \"TRANSACTIONTYPE\": \"CCREVERSE\",\n        \"SYSTEMTRACENUM\": \"MOCK_TRACE\"\n    }\n}"
+						},
+						"url": {
+							"raw": "{{mock_gateway_url}}/CCREVERSE",
+							"host": ["{{mock_gateway_url}}"],
+							"path": ["CCREVERSE"]
+						}
+					}
+				},
+				{
+					"name": "CCRECEIPTRETRIEVE (Inquiry) - Success",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"TRANSACTION\": {\n        \"RNID\": \"MOCK_ID\",\n        \"RNCERT\": \"MOCK_CERT\",\n        \"TRANSACTIONTYPE\": \"CCRECEIPTRETRIEVE\",\n        \"SYSTEMTRACENUM\": \"MOCK_TRACE\"\n    }\n}"
+						},
+						"url": {
+							"raw": "{{mock_gateway_url}}/CCRECEIPTRETRIEVE",
+							"host": ["{{mock_gateway_url}}"],
+							"path": ["CCRECEIPTRETRIEVE"]
+						}
+					}
+				},
+				{
+					"name": "CCAUTH - Timeout Simulation",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Mock-Scenario",
+								"value": "TIMEOUT"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"TRANSACTION\": {\n        \"RNID\": \"MOCK_ID\",\n        \"CCAMT\": \"10.00\"\n    }\n}"
+						},
+						"url": {
+							"raw": "{{mock_gateway_url}}/CCAUTH",
+							"host": ["{{mock_gateway_url}}"],
+							"path": ["CCAUTH"]
+						}
+					}
+				},
+				{
+					"name": "CCAUTH - Retryable Error (-153)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Mock-Scenario",
+								"value": "RETRYABLE_ERROR"
+							}
+						],
+						"url": {
+							"raw": "{{mock_gateway_url}}/CCAUTH",
+							"host": ["{{mock_gateway_url}}"],
+							"path": ["CCAUTH"]
+						}
+					}
+				},
+				{
+					"name": "CCAUTH - Gateway Timeout (-155)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Mock-Scenario",
+								"value": "GATEWAY_TIMEOUT_RECONCILE"
+							}
+						],
+						"url": {
+							"raw": "{{mock_gateway_url}}/CCAUTH",
+							"host": ["{{mock_gateway_url}}"],
+							"path": ["CCAUTH"]
+						}
+					}
+				},
+				{
+					"name": "CCAUTH - Auto-Reversed (-159)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Mock-Scenario",
+								"value": "AUTO_REVERSED"
+							}
+						],
+						"url": {
+							"raw": "{{mock_gateway_url}}/CCAUTH",
+							"host": ["{{mock_gateway_url}}"],
+							"path": ["CCAUTH"]
+						}
+					}
+				},
+				{
+					"name": "CCAUTH - Declined (100)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Mock-Scenario",
+								"value": "DECLINED"
+							}
+						],
+						"url": {
+							"raw": "{{mock_gateway_url}}/CCAUTH",
+							"host": ["{{mock_gateway_url}}"],
+							"path": ["CCAUTH"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Tokenization",
+			"item": [
+				{
+					"name": "Tokenize Card",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"card_number\": \"4111 1111 1111 1111\",\n    \"exp\": \"1230\"\n}"
+						},
+						"url": {
+							"raw": "{{mock_gateway_url}}/v1/tokenization",
+							"host": ["{{mock_gateway_url}}"],
+							"path": ["v1", "tokenization"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "iFrame",
+			"item": [
+				{
+					"name": "Create iFrame Session",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"TRANSACTION\": {\n        \"RNID\": \"MOCK_ID\",\n        \"RNCERT\": \"MOCK_CERT\",\n        \"REFERURL\": \"http://localhost:8080/callback\"\n    }\n}"
+						},
+						"url": {
+							"raw": "{{mock_gateway_url}}/v1/iframe-session",
+							"host": ["{{mock_gateway_url}}"],
+							"path": ["v1", "iframe-session"]
+						}
+					}
+				},
+				{
+					"name": "Get Mock iFrame",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{mock_gateway_url}}/v1/iframe?session_id=mock-session&refer_url=http://localhost:8080/callback",
+							"host": ["{{mock_gateway_url}}"],
+							"path": ["v1", "iframe"],
+							"query": [
+								{
+									"key": "session_id",
+									"value": "mock-session"
+								},
+								{
+									"key": "refer_url",
+									"value": "http://localhost:8080/callback"
+								}
+							]
+						}
+					}
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "mock_gateway_url",
+			"value": "http://localhost:8083"
+		}
+	]
+}
