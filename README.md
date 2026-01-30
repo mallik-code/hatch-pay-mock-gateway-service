@@ -38,3 +38,7 @@ The service runs on port `8083` by default.
 docker build -t mock-gateway .
 docker run -p 8083:8083 mock-gateway
 ```
+
+## Documentation
+
+- [Configuration Guide](docs/configuration_guide.md) - Detailed setup and database configuration.
